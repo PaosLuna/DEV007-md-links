@@ -1,4 +1,4 @@
-import { routeExists, routeAbsolute, readFile, fileOrDir, fileExtension } from "./index.js";
+import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension } from "./index.js";
 import chalk from 'chalk'
 
 const document = process.argv[2];
@@ -8,12 +8,20 @@ const mdLinks = () => {
 if (isExists) {
     const absolute = routeAbsolute(document);
     console.log(chalk.bold.bgGreen(absolute));
-    fileOrDir(document);
-    readFile(document);
-    fileExtension(document);
+    const archivos = fileOrDir(document);
+    console.log(archivos, 12);
+    const filesMd = getMdExtension(archivos);
+    console.log(filesMd, 15);
+    // readFile(document); averiguar como ejecutar función asíncrona then catch 
 } else {
     console.error("ERROR");
 }
 };
 
 mdLinks(document);
+
+// const mdLinks2 = () => {
+//     return new Promise((resolve, reject) => {
+        
+//     })
+// }
