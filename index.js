@@ -45,19 +45,43 @@ export function fileOrDir(route) {
 
 // FILTRAR SOLO LOS DE EXTENSIÓN MD
 export function getMdExtension(arrayFiles) {
-  return arrayFiles.filter(file => path.extname(file) === '.md');
+  const filesMd = arrayFiles.filter(file => path.extname(file) === '.md');
+  // console.log(filesMd, 49);
+  return filesMd
 }
 
 // LEE UN ARCHIVO
-export function readFile(file) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(file, "utf-8", (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
+export function readFile(filesMd) {
+  const promises = [];
+  filesMd.forEach((file) => {
+    promises.push(
+      new Promise((resolve, reject) => {
+        fs.readFile(file, "utf-8", (error, data) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      })
+    );
   });
+
+  return Promise.all(promises);
 }
 
+// VERIFICAR SI TIENEN LINKS 
+export function getLinks(array){
+const links = []
+array.forEach((link)=>{
+  if(link.match(/[^!]\[.+?\]\(.+?\)/g)){
+    let linkMatch = link.match(/[^!]\[.+?\]\(.+?\)/g)
+    links.push({
+      href: linkMatch[0].match(/https*?:([^"')\s]+)/)[0],
+      title: linkMatch[0].match(/\[(.*)\]/)[2]
+    })
+  }
+})
+console.table(links);
+return links;
+}
