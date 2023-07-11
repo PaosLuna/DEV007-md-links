@@ -7,29 +7,28 @@ const isExists = routeExists(document);
 
 const mdLinks = () => {
     return new Promise((resolve, reject) => {
-        // console.log("isExists:", isExists);
+        console.log("¿Existe la ruta?", isExists);
     if (isExists) {
+        console.log(chalk.bold.bgGreen("El archivo fue encontrado"));
         const absolute = routeAbsolute(document);
-        console.log(chalk.bold.bgGreen(absolute));
+        console.log(chalk.bold.bgYellow(absolute), 14);
         const archivos = fileOrDir(document);
-        // console.log(archivos, 12);
+        console.log(archivos, 16);
         const filesMd = getMdExtension(archivos);
-        // console.log(filesMd, 15);
+        console.log(filesMd, 18);
         readFile(filesMd)
-        // console.log(readFile(filesMd), 34)
         .then((data) => {
-            console.log(data, '***');
-            console.log("documento leído");
-            resolve(data); // Resuelve la promesa
+            console.log(data, 21);
+            resolve(data); 
             getLinks(data);
+            console.table(getLinks(data));
         })
         .catch((error) => {
-            reject(error); // Rechaza la promesa
-            console.log("ERROR de lectura")
+            reject(error); 
+            console.log(chalk.bold.bgRed("ERROR de lecturaaaa"));
         });
     } else {
-        // reject(new Error("ERROR"));
-        console.log("ERROR2")
+        console.warn(chalk.bold.bgRed("El archivo no fue encontrado"));
     }
     });
 };
