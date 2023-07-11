@@ -1,20 +1,17 @@
 import fs from "fs";
 import path from "path";
-import chalk from "chalk";
 
 // VERIFICA SI LA RUTA EXISTE
 export function routeExists(route) {
   if (fs.existsSync(route)) {
-    console.log(chalk.bold.bgGreen("El archivo fue encontrado"));
     return true;
   } else {
-    console.warn(chalk.bold.red("El archivo no fue encontrado"));
     return false;
   }
 }
 
 // VERIFICA SI LA RUTA ES ABSOLUTA
-export function routeAbsolute(route) {
+export const routeAbsolute = (route) => {
   if (path.isAbsolute(route)) {
     return route;
   } else {
@@ -46,15 +43,14 @@ export function fileOrDir(route) {
 // FILTRAR SOLO LOS DE EXTENSIÓN MD
 export function getMdExtension(arrayFiles) {
   const filesMd = arrayFiles.filter(file => path.extname(file) === '.md');
-  // console.log(filesMd, 49);
   return filesMd
 }
 
 // LEE UN ARCHIVO
 export function readFile(filesMd) {
-  const promises = [];
+  const filesContent = [];
   filesMd.forEach((file) => {
-    promises.push(
+    filesContent.push(
       new Promise((resolve, reject) => {
         fs.readFile(file, "utf-8", (error, data) => {
           if (error) {
@@ -66,22 +62,30 @@ export function readFile(filesMd) {
       })
     );
   });
-
-  return Promise.all(promises);
+  return Promise.all(filesContent);
 }
 
 // VERIFICAR SI TIENEN LINKS 
 export function getLinks(array){
 const links = []
 array.forEach((link)=>{
+  let ruta = path.resolve()
   if(link.match(/[^!]\[.+?\]\(.+?\)/g)){
     let linkMatch = link.match(/[^!]\[.+?\]\(.+?\)/g)
     links.push({
       href: linkMatch[0].match(/https*?:([^"')\s]+)/)[0],
-      title: linkMatch[0].match(/\[(.*)\]/)[2]
+      text: linkMatch[0].match(/\[(.*)\]/)[1],
+      file: ruta,
+      ok: 'ok', 
+      HTTP: 'validate'
     })
   }
 })
-console.table(links);
+//console.table(links);
 return links;
 }
+
+
+/*function validate() {
+  return true;
+}*/
