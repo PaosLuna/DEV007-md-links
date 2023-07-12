@@ -19,7 +19,7 @@ export const routeAbsolute = (route) => {
   }
 }
 
-// VERIFICAR SI ES UN DIRECTORIO O ARCHIVO
+// VERIFICA SI ES UN DIRECTORIO O ARCHIVO
 export function fileOrDir(route) {
   let arrayFiles = []
   const stats = fs.statSync(route);
@@ -40,7 +40,7 @@ export function fileOrDir(route) {
   return arrayFiles
 }
 
-// FILTRAR SOLO LOS DE EXTENSIÓN MD
+// FILTRA SOLO EXTENSIÓN MD
 export function getMdExtension(arrayFiles) {
   const filesMd = arrayFiles.filter(file => path.extname(file) === '.md');
   return filesMd
@@ -65,24 +65,22 @@ export function readFile(filesMd) {
   return Promise.all(filesContent);
 }
 
-// VERIFICAR SI TIENEN LINKS 
+// VERIFICA SI TIENEN LINKS 
 export function getLinks(array) {
   const links = [];
   const regex = /\[.+?\]\(.+?\)/g;
-
   array.forEach((link) => {
     const linkMatches = link.match(regex);
     if (linkMatches) {
       links.push(...linkMatches);
     }
   });
-
   // console.table(links);
   return links;
 }
 
 
-// VERIFICAR  SI VALIDATE ES TRUE
+// VERIFICAR SI VALIDATE ES TRUE
 export function validateTrue(links) {
   const trueLinks = [];
   links.forEach((link) => {
@@ -102,7 +100,7 @@ export function validateTrue(links) {
   return trueLinks;
 }
 
-// VERIFICAR SI VALIDATE ES FALSE
+// VERIFICA SI VALIDATE ES FALSE
 export function validateFalse(links) {
   const falseLinks = [];
   links.forEach((link) => {

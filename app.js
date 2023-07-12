@@ -6,8 +6,6 @@ const document = process.argv[2];
 const isExists = routeExists(document);
 // eslint-disable-next-line no-undef
 const isOptionValidate = process.argv.includes('--validate');
-
-
 // eslint-disable-next-line no-undef
 const isOptionStats = process.argv.includes('--stats');
 
@@ -27,7 +25,6 @@ const mdLinks = () => {
         .then((data) => {
             console.log(data, 21);
             resolve(data); 
-            //getLinks(data);
             const links = getLinks(data)
             console.table(links);
             if(isOptionValidate && !isOptionStats){
