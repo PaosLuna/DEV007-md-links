@@ -2,16 +2,11 @@ import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension, getLin
 import chalk from 'chalk'
 
 // eslint-disable-next-line no-undef
-const document = process.argv[2];
-const isExists = routeExists(document);
-// eslint-disable-next-line no-undef
-const isOptionValidate = process.argv.includes('--validate');
-// eslint-disable-next-line no-undef
-const isOptionStats = process.argv.includes('--stats');
+//const document = process.argv[2];
 
-
-const mdLinks = () => {
+export const mdLinks = (document, options) => {
     return new Promise((resolve, reject) => {
+        const isExists = routeExists(document);
         console.log("¿Existe la ruta?", isExists);
     if (isExists) {
         console.log(chalk.bold.bgGreen("El archivo fue encontrado"));
@@ -23,27 +18,12 @@ const mdLinks = () => {
         console.log(filesMd, 18);
         readFile(filesMd)
         .then((data) => {
-            console.log(data, 21);
-            resolve(data); 
             const links = getLinks(data)
-            console.table(links);
-            if(isOptionValidate && !isOptionStats){
-                validateTrue(links);
-                console.log('Stats: ', isOptionStats)
-                console.log('Validate: ', isOptionValidate)
+            if(options.validate){
+            const validatedLlinks = validateTrue(links);
+            resolve(validatedLlinks)
             } 
-            if (isOptionValidate && isOptionStats){
-                console.log('ejecuta validate y states');
-                console.log('Stats: ', isOptionStats)
-                console.log('Validate: ', isOptionValidate)
-                validateTrue(links);                
-            }
-            if (isOptionStats && !isOptionValidate){
-                console.log('ejecuta states');
-                console.log('Stats: ', isOptionStats)
-                console.log('Validate: ', isOptionValidate)
-                validateFalse(links);
-            } 
+            resolve(links)
         })
         .catch((error) => {
             reject(error); 
@@ -54,5 +34,3 @@ const mdLinks = () => {
     }
     });
 };
-
-mdLinks(document);
