@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import axios from "axios";
 
 // VERIFICA SI LA RUTA EXISTE
 export function routeExists(route) {
@@ -103,4 +104,45 @@ export function validateTrue(links, isValidateTrue) {
   return falseLinks;
 }
 
+//SOLO URL
+export function justURL(array) {
+  const url = []
+  array.forEach((link) => {
+    const urlMatches = link.match(/https*?:([^"')\s]+)/g);
+    url.push(urlMatches)
+  })
+  console.log(url)
+  return url;
+}
+
 //Hacer petición HTTP
+export function peticionHTTP(urls){
+  const promesas = []
+  urls.forEach((url) => {
+    promesas.push(axios.get(url))
+  })
+  
+Promise.all(promesas)
+  .then(axios.spread((...responses) => {
+    responses.forEach(response => {
+      console.log(response.status); 
+    });
+  }))
+  .catch(error => {
+    console.error(error);
+  });
+}
+
+
+/*export function peticionHTTP(url){
+  url.forEach((http) => {
+    if (http){
+    return axios 
+    .get(url)
+    .then((res) => {console.log(res.status)})
+    .catch((err) => {
+      console.log('no sirve');
+    });
+  }
+  })
+}*/

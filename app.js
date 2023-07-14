@@ -1,4 +1,4 @@
-import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension, getLinks, validateTrue } from "./index.js";
+import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension, getLinks, validateTrue, peticionHTTP, justURL } from "./index.js";
 import chalk from 'chalk'
 
 // eslint-disable-next-line no-undef
@@ -18,10 +18,12 @@ export const mdLinks = (document, options) => {
         console.log(filesMd, 18);
         readFile(filesMd)
         .then((data) => {
-            const links = getLinks(data)
+            const links = getLinks(data);
+            resolve(links);
             const validatedLlinks = validateTrue(links, options.validate);
-            resolve(validatedLlinks)
-            resolve(links)
+            resolve(validatedLlinks);
+            const url = justURL(links)
+            peticionHTTP(url);
         })
         .catch((error) => {
             reject(error); 
