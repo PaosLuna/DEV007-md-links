@@ -76,13 +76,12 @@ export function getLinks(array) {
       links.push(...linkMatches);
     }
   });
-  // console.table(links);
   return links;
 }
 
 
 // VERIFICAR SI VALIDATE ES TRUE
-export function validateTrue(links, isValidateTrue) {
+export function validateTrue(links) {
   const falseLinks = [];
   links.forEach((link) => {
     let ruta = path.resolve();
@@ -93,56 +92,44 @@ export function validateTrue(links, isValidateTrue) {
         text: linkFalse[0].match(/\[(.*?)\]/)[1],
         file: ruta,
       }
-      if (isValidateTrue) {
-        falseLinks.push({...linkObject, ok: 'ok', HTTP: "validate"})
-      } else {
-        falseLinks.push(linkObject)
-      }
+      falseLinks.push(linkObject);
     }
   });
-  console.log(falseLinks, 99);
   return falseLinks;
 }
 
-//SOLO URL
-export function justURL(array) {
-  const url = []
-  array.forEach((link) => {
-    const urlMatches = link.match(/https*?:([^"')\s]+)/g);
-    url.push(urlMatches)
-  })
-  console.log(url)
-  return url;
+//Hacer petición HTTP
+export function peticionHTTP(arrObject){
+  const promesas = arrObject.map((obj) => {
+    return axios
+    .get(obj.href)
+    .then((response) => {
+      obj.status = response.status;
+      obj.mensaje = response.statusText;
+      return obj;
+    })
+    .catch(error => {
+    obj.mensaje = 'Fail';
+    if (error.response){
+      obj.status = error.response.status;
+    }
+    return obj;
+  });
+});
+return Promise.all(promesas);
 }
 
-//Hacer petición HTTP
-export function peticionHTTP(urls){
-  const promesas = []
-  urls.forEach((url) => {
-    promesas.push(axios.get(url))
-  })
-  
-Promise.all(promesas)
-  .then(axios.spread((...responses) => {
-    responses.forEach(response => {
-      console.log(response.status); 
-    });
-  }))
-  .catch(error => {
-    console.error(error);
+// OBTENER STATS
+export function getStats(arrObject,isOptionValidate) {
+  return new Promise((resolve, reject) => {
+    const allStats = {
+      total: arrObject.length,
+      unique: new Set(arrObject.map((link) => link.href)).size,
+    }
+    if(isOptionValidate){
+      allStats.working = arrObject.filter( obj => obj.mensaje == 'OK').length;
+      allStats.broken = arrObject.filter( obj => obj.mensaje == 'Fail').length;
+    }
+    resolve(allStats);
   });
 }
-
-
-/*export function peticionHTTP(url){
-  url.forEach((http) => {
-    if (http){
-    return axios 
-    .get(url)
-    .then((res) => {console.log(res.status)})
-    .catch((err) => {
-      console.log('no sirve');
-    });
-  }
-  })
-}*/

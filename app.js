@@ -1,36 +1,35 @@
-import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension, getLinks, validateTrue, peticionHTTP, justURL } from "./index.js";
+import { routeExists, routeAbsolute, readFile, fileOrDir, getMdExtension, getLinks, validateTrue, peticionHTTP, getStats } from "./index.js";
 import chalk from 'chalk'
-
-// eslint-disable-next-line no-undef
-//const document = process.argv[2];
 
 export const mdLinks = (document, options) => {
     return new Promise((resolve, reject) => {
         const isExists = routeExists(document);
-        console.log("¿Existe la ruta?", isExists);
     if (isExists) {
-        console.log(chalk.bold.bgGreen("El archivo fue encontrado"));
         const absolute = routeAbsolute(document);
         console.log(chalk.bold.bgYellow(absolute), 14);
         const archivos = fileOrDir(document);
-        console.log(archivos, 16);
         const filesMd = getMdExtension(archivos);
-        console.log(filesMd, 18);
         readFile(filesMd)
         .then((data) => {
             const links = getLinks(data);
-            resolve(links);
-            const validatedLlinks = validateTrue(links, options.validate);
-            resolve(validatedLlinks);
-            const url = justURL(links)
-            peticionHTTP(url);
-        })
-        .catch((error) => {
-            reject(error); 
-            console.log(chalk.bold.bgRed("ERROR de lecturaaaa", 55));
-        });
-    } else {
-        console.warn(chalk.bold.bgRed("El archivo no fue encontrado"));
-    }
+            const objsLinks = validateTrue(links);
+    if (options.validate && options.stats) {
+    peticionHTTP(objsLinks).then((validatedLinks) => {
+        getStats(validatedLinks, options.validate).then((res) => resolve(res));
     });
+    }else if(options.validate){
+    peticionHTTP(objsLinks).then((res) => resolve(res));
+    }else if(options.stats) {
+        getStats(objsLinks, options.validate).then((res) => resolve(res));
+    }else{
+    resolve(objsLinks)
+    }
+})
+.catch((err) => {
+    reject(err);
+});
+} else {
+console.log(chalk.bold.red('La ruta ingresada no existe'))
+}
+});
 };
