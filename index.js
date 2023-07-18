@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import axios from "axios";
 
-// VERIFICA SI LA RUTA EXISTE
+/*------------------------------------------------------- VERIFICA SI LA RUTA EXISTE-----------------------------------------------*/
 export function routeExists(route) {
   if (fs.existsSync(route)) {
     return true;
@@ -11,16 +11,16 @@ export function routeExists(route) {
   }
 }
 
-// VERIFICA SI LA RUTA ES ABSOLUTA
+/*-------------------------------------------------------VERIFICA SI LA RUTA ES ABSOLUTA--------------------------------------------*/
 export const routeAbsolute = (route) => {
-  if (path.isAbsolute(route)) {
-    return route;
+  if (!path.isAbsolute(route)) {
+    return path.resolve(route)//.replace(/\\/g, '/')
   } else {
-    return path.resolve(route);
+    return route;
   }
 }
 
-// VERIFICA SI ES UN DIRECTORIO O ARCHIVO
+/*-------------------------------------------------------VERIFICA SI ES UN DIRECTORIO O ARCHIVO-------------------------------------*/
 export function fileOrDir(route) {
   let arrayFiles = []
   const stats = fs.statSync(route);
@@ -41,13 +41,13 @@ export function fileOrDir(route) {
   return arrayFiles
 }
 
-// FILTRA SOLO EXTENSIÓN MD
+/*-------------------------------------------------------FILTRA SOLO EXTENSIÓN MD---------------------------------------------------*/
 export function getMdExtension(arrayFiles) {
   const filesMd = arrayFiles.filter(file => path.extname(file) === '.md');
   return filesMd
 }
 
-// LEE UN ARCHIVO
+/*-------------------------------------------------------LEE UN ARCHIVO-------------------------------------------------------------*/
 export function readFile(filesMd) {
   const filesContent = [];
   filesMd.forEach((file) => {
@@ -66,7 +66,7 @@ export function readFile(filesMd) {
   return Promise.all(filesContent);
 }
 
-// VERIFICA SI TIENEN LINKS 
+/*-------------------------------------------------------VERIFICA SI TIENEN LINKS----------------------------------------------------*/
 export function getLinks(array) {
   const links = [];
   const regex = /\[.+?\]\(.+?\)/g;
@@ -80,7 +80,7 @@ export function getLinks(array) {
 }
 
 
-// VERIFICAR SI VALIDATE ES TRUE
+/*--------------------------------------------------------VERIFICAR SI VALIDATE ES TRUE----------------------------------------------*/
 export function validateTrue(links) {
   const falseLinks = [];
   links.forEach((link) => {
@@ -98,7 +98,7 @@ export function validateTrue(links) {
   return falseLinks;
 }
 
-//Hacer petición HTTP
+/*----------------------------------------------------------Hacer petición HTTP-------------------------------------------------------*/
 export function peticionHTTP(arrObject){
   const promesas = arrObject.map((obj) => {
     return axios
@@ -119,9 +119,9 @@ export function peticionHTTP(arrObject){
 return Promise.all(promesas);
 }
 
-// OBTENER STATS
+/*----------------------------------------------------------OBTENER STATS-------------------------------------------------------------*/
 export function getStats(arrObject,isOptionValidate) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const allStats = {
       total: arrObject.length,
       unique: new Set(arrObject.map((link) => link.href)).size,
