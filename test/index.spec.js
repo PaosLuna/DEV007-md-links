@@ -40,6 +40,14 @@ describe('readFile', () => {
   it('Es una función', () => {
     expect(typeof readFile).toBe('function');
   });
+  it('should read the contents of all files', async () => {
+    const arrayFiles = ['files\\pruebaTres.md'];
+    const expectedResults = [
+      "Archivo de prueba FALSE [Markdown](https://es.wikipedia.org/wiki/Markdown)",
+    ];
+    const actualResults = await readFile(arrayFiles);
+    expect(actualResults).toEqual(expectedResults);
+  });
 });
 
 describe('fileOrDir', () => {
@@ -102,7 +110,7 @@ describe('peticionHTTP', () => {
   it('Es una función', () => {
     expect(typeof peticionHTTP).toBe('function');
   });
-  it("debe retornar una promesa con un array de objetos", async () => {
+  it("should return a Promise of an array of objects", async () => {
     const arrObject = [
       { href: "https://www.google.com" },
       { href: "https://www.facebook.com" },
