@@ -20,9 +20,6 @@ mdLinks(document, options)
         console.log(chalk.bold.blue('Unique: ' + links.unique))
         console.log(chalk.bold.green('Working: ' + links.working))
         console.log(chalk.bold.red('Broken: ' + links.broken))
-        links.forEach(link => {
-            console.log(chalk.bold.gray(link.file + ' ' + link.href + ' ' + link.mensaje + ' ' + link.status + ' ' + link.text))
-        });
     }else if(options.validate){
         links.forEach(link => {
             const linkObject = {
