@@ -14,7 +14,7 @@ export function routeExists(route) {
 /*-------------------------------------------------------VERIFICA SI LA RUTA ES ABSOLUTA--------------------------------------------*/
 export const routeAbsolute = (route) => {
   if (!path.isAbsolute(route)) {
-    return path.resolve(route)//.replace(/\\/g, '/')
+    return path.resolve(route)
   } else {
     return route;
   }

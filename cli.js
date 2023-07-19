@@ -19,21 +19,35 @@ mdLinks(document, options)
         console.log(chalk.bold.blue('Total: ' + links.total))
         console.log(chalk.bold.blue('Unique: ' + links.unique))
         console.log(chalk.bold.green('Working: ' + links.working))
-        console.log(chalk.bold.red('Broken: ' +links.broken))
+        console.log(chalk.bold.red('Broken: ' + links.broken))
+        links.forEach(link => {
+            console.log(chalk.bold.gray(link.file + ' ' + link.href + ' ' + link.mensaje + ' ' + link.status + ' ' + link.text))
+        });
     }else if(options.validate){
         links.forEach(link => {
-        console.log(chalk.bold.gray(link.file + ' ' + link.href + ' ' + link.mensaje + ' ' + link.status + ' ' + link.text))
+            const linkObject = {
+                href: link.href,
+                text: link.text,
+                file: link.file,
+                status: link.status,
+                mensaje: link.mensaje
+            }
+            console.log(linkObject);
         });
     }else if(options.stats) {
         console.log(chalk.bold.green('Total: ' + links.total))
         console.log(chalk.bold.green('Unique: ' + links.unique))
     }else{
         links.forEach(link => {
-            console.log(chalk.bold.yellow(link.file + ' ' + link.href + ' ' + link.text))
+            const linkObject = {
+                href: link.href,
+                text: link.text,
+                file: link.file,
+            }
+            console.log(linkObject);
         });
     }
-
 })
 .catch((err)=>{
-console.log(err, 22)
+console.log(err)
 })
