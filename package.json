@@ -1,12 +1,14 @@
 {
-  "name": "md-links",
-  "version": "0.1.0",
+  "name": "md-links-paos-luna",
+  "version": "1.0.0",
   "type": "module",
+  "main": "cli.js",
+  "bin": "cli.js",
   "engines": {
     "node": ">=16.x"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage --verbose"
   },
   "bootcamp": {
     "createdAt": "2023-06-20T14:05:58.211Z",
