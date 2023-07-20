@@ -53,7 +53,7 @@ Para utilizar la biblioteca como una API, siga estos pasos:
 
 Deberás usar el siguiente comando en tu terminal: 
 
-node cli.js <path> [options]
+node cli.js path [options]
 
 path: es la ruta al archivo o directorio que deseas analizar.
 options: --validate, --stats o ambas.
@@ -61,7 +61,7 @@ options: --validate, --stats o ambas.
 
 ##### Solo path 
 
-Si se usa el siguiente comando: node cli.js <path>
+Si se usa el siguiente comando: node cli.js path
 
 Se mostrarán todos los enlaces que se encuentran en esa ruta.
 
@@ -73,7 +73,7 @@ Si la ruta no es válida o no se encuentra ningún archivo .md, aparecerá un er
 
 ##### `--validate`
 
-Si se usa el siguiente comando: node cli.js <path> --validate
+Si se usa el siguiente comando: node cli.js path --validate
 
 Se mostrarán todos los enlaces encontrados y comprobará si son válidos o no enviando un mensaje de ok/fail de acuerdo al caso.
 
@@ -82,7 +82,7 @@ Se mostrarán todos los enlaces encontrados y comprobará si son válidos o no e
 
 ##### `--stats`
 
-Si se usa el siguiente comando: node cli.js <path> --stats
+Si se usa el siguiente comando: node cli.js path --stats
 
 Se mostrará un mensaje con el total de enlaces encontrados y cuantos de ellos son únicos.
 
@@ -91,7 +91,7 @@ Se mostrará un mensaje con el total de enlaces encontrados y cuantos de ellos s
 
 ##### `--validate --stats` 
 
-Si se usa el siguiente comando: node cli.js <path> --validate --stats
+Si se usa el siguiente comando: node cli.js path --validate --stats
 
 Se mostrará un mensaje diciendo la cantidad total de enlaces encontrados, cuántos de ellos son únicos y cuántos están rotos.
 
@@ -111,12 +111,12 @@ npm i md-links-paos-luna
 
 Una vez completada la instalación, ejecute el siguiente comando en su terminal:
 
-npx md-links-paos-luna <path> [options]
+npx md-links-paos-luna path [options]
 
 
 ##### Solo path 
 
-Si se usa el siguiente comando: npx md-links-paos-luna <path>
+Si se usa el siguiente comando: npx md-links-paos-luna path
 
 Se mostrarán todos los enlaces que se encuentran en esa ruta.
 
@@ -128,7 +128,7 @@ Si la ruta no es válida o no se encuentra ningún archivo .md, aparecerá un er
 
 ##### `--validate`
 
-Si se usa el siguiente comando: npx md-links-paos-luna <path> --validate
+Si se usa el siguiente comando: npx md-links-paos-luna path --validate
 
 Se mostrarán todos los enlaces encontrados y comprobará si son válidos o no enviando un mensaje de ok/fail de acuerdo al caso.
 
@@ -137,7 +137,7 @@ Se mostrarán todos los enlaces encontrados y comprobará si son válidos o no e
 
 ##### `--stats`
 
-Si se usa el siguiente comando: npx md-links-paos-luna <path> --stats
+Si se usa el siguiente comando: npx md-links-paos-luna path --stats
 
 Se mostrará un mensaje con el total de enlaces encontrados y cuantos de ellos son únicos.
 
@@ -146,7 +146,7 @@ Se mostrará un mensaje con el total de enlaces encontrados y cuantos de ellos s
 
 ##### `--validate --stats` 
 
-Si se usa el siguiente comando: npx md-links-paos-luna <path> --validate --stats
+Si se usa el siguiente comando: npx md-links-paos-luna path --validate --stats
 
 Se mostrará un mensaje diciendo la cantidad total de enlaces encontrados, cuántos de ellos son únicos y cuántos están rotos.
 
