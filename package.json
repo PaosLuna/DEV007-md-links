@@ -1,7 +1,8 @@
 {
   "name": "md-links-paos-luna",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
+  "description": "Md-links es una aplicación CLI que se puede usar para recuperar todos los enlaces dentro de los archivos Markdown que están presentes en una ruta específica",
   "main": "cli.js",
   "bin": "cli.js",
   "engines": {
@@ -24,5 +25,17 @@
   "dependencies": {
     "axios": "^1.4.0",
     "chalk": "^5.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaosLuna/DEV007-md-links"
+  },
+  "keywords": [
+    "markdown",
+    "links"
+  ],
+  "author": "Paola Luna <lunapp20@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/PaosLuna/DEV007-md-links/blob/main/README.md"
 }
+
