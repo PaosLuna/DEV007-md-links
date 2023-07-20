@@ -59,7 +59,7 @@ path: es la ruta al archivo o directorio que deseas analizar.
 options: --validate, --stats o ambas.
 
 
-##### Solo path 
+##### `Solo path` 
 
 Si se usa el siguiente comando: node cli.js path
 
@@ -114,7 +114,7 @@ Una vez completada la instalación, ejecute el siguiente comando en su terminal:
 npx md-links-paos-luna path [options]
 
 
-##### Solo path 
+##### `Solo path` 
 
 Si se usa el siguiente comando: npx md-links-paos-luna path
 
