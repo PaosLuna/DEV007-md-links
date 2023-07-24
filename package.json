@@ -1,6 +1,6 @@
 {
   "name": "md-links-paos-luna",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "Md-links es una aplicación CLI que se puede usar para recuperar todos los enlaces dentro de los archivos Markdown que están presentes en una ruta específica",
   "main": "cli.js",

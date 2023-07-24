@@ -88,7 +88,7 @@ export function validateTrue(links) {
     if (link.match(/\[.+?\]\(.+?\)/g)) {
       let linkFalse = link.match(/\[.+?\]\(.+?\)/g);
       const linkObject = {
-        href: linkFalse[0].match(/https*?:([^"')\s]+)/)[0],
+        href: linkFalse[0].match(/https*?:([^"')\s]+)/),
         text: linkFalse[0].match(/\[(.*?)\]/)[1],
         file: ruta,
       }
